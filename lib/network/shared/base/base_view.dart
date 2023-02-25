@@ -16,5 +16,43 @@ abstract class base_view<T extends StatefulWidget, VM extends base_view_model>
     viewModel = initViewModel();
   }
 
+  @override
+  void hideLoading() {
+    Navigator.pop(context);
+  }
+
+  @override
+  void showLoading({String message = ' loading'}) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Center(child: Row(
+          children: [
+            Text(message),
+            CircularProgressIndicator(),
+          ],
+        ));
+      },
+    );
+  }
+
+  @override
+  void showMessage(String message) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text('Ok'))
+          ],
+          content: Text(message),
+        );
+      },
+    );
+  }
 
 }

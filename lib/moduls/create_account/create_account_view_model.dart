@@ -11,7 +11,7 @@ class create_account_view_model extends base_view_model<createAccountNavigator> 
 
   void createAccountWithFirebaseAuth(String email, String passWord,String fName,String lName) async {
     try {
-         navigator!.hideLoading();
+         navigator!.showLoading();
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -22,21 +22,27 @@ class create_account_view_model extends base_view_model<createAccountNavigator> 
       navigator!.showMessage("Account created Successfully");
       MYUser user =MYUser(id: credential.user?.uid??' ', FName: fName, LName: lName, email: email);
       await DataBaseUtils.addUserToDataBase(user).then((value) {
+        navigator!.hideLoading();
               navigator!.goToHome(user);
               return;
       });
 
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        navigator!.hideLoading();
+
         navigator!.showMessage('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
         navigator!.hideLoading();
+
+      } else if (e.code == 'email-already-in-use') {
+
         navigator!.showMessage('The account already exists for that email.');
+        navigator!.hideLoading();
       }
     } catch (e) {
 
 
+          navigator!.showMessage(e.toString());
+          navigator!.hideLoading();
     }
     return;
   }

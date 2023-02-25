@@ -14,11 +14,14 @@ class login_view_model extends base_view_model<login_navigator>{
            email: email,
            password: pass,
        );
+       navigator!.showLoading();
        navigator!.showMessage('Successfully logged');
+
 
 
       MYUser? user=  await DataBaseUtils.getUerFromDataBase(credential.user?.uid??'');
       if(user!=null){
+        navigator!.hideLoading();
            navigator!.goToHome(user);
            return;
       }
@@ -28,12 +31,15 @@ class login_view_model extends base_view_model<login_navigator>{
 
      } on FirebaseAuthException catch (e) {
 
-       navigator!.hideLoading();
+
        navigator!.showMessage('InValid');
+       navigator!.hideLoading();
+
 
        } catch (e){
-       navigator!.hideLoading();
        navigator!.showMessage(e.toString());
+       navigator!.hideLoading();
+
      }
 
    }

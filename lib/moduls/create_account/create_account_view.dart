@@ -21,7 +21,7 @@ class creat_acountScreen extends StatefulWidget {
 }
 
 class _creat_acountScreenState extends base_view<creat_acountScreen,create_account_view_model>
-    implements createAccountNavigator{
+    implements createAccountNavigator {
   GlobalKey<FormState> formKey = GlobalKey();
 
   TextEditingController emailController = TextEditingController();
@@ -34,9 +34,10 @@ class _creat_acountScreenState extends base_view<creat_acountScreen,create_accou
 
   @override
   void initState() {
-     viewModel=create_account_view_model();
+    viewModel = create_account_view_model();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<create_account_view_model>(
@@ -109,7 +110,8 @@ class _creat_acountScreenState extends base_view<creat_acountScreen,create_accou
                             hintText: "Last Name",
                             enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(16),
-                                borderSide: const BorderSide(color: Colors.blue)),
+                                borderSide: const BorderSide(
+                                    color: Colors.blue)),
                             border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                   color: Colors.blue), //<-- SEE HERE
@@ -130,7 +132,7 @@ class _creat_acountScreenState extends base_view<creat_acountScreen,create_accou
                             }
 
                             final bool emailValid = RegExp(
-                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                 .hasMatch(email);
                             return null;
                           },
@@ -165,17 +167,20 @@ class _creat_acountScreenState extends base_view<creat_acountScreen,create_accou
                             hintText: "Password",
                             enabledBorder: OutlineInputBorder(
                               borderSide:
-                                  const BorderSide(color: Colors.blue), //<-- SEE HERE
+                              const BorderSide(color: Colors.blue),
+                              //<-- SEE HERE
                               borderRadius: BorderRadius.circular(16),
                             ),
                             errorBorder: OutlineInputBorder(
                               borderSide:
-                                  const BorderSide(color: Colors.blue), //<-- SEE HERE
+                              const BorderSide(color: Colors.blue),
+                              //<-- SEE HERE
                               borderRadius: BorderRadius.circular(16),
                             ),
                             border: OutlineInputBorder(
                               borderSide:
-                                  const BorderSide(color: Colors.blue), //<-- SEE HERE
+                              const BorderSide(color: Colors.blue),
+                              //<-- SEE HERE
                               borderRadius: BorderRadius.circular(16),
                             ),
                           ),
@@ -186,15 +191,15 @@ class _creat_acountScreenState extends base_view<creat_acountScreen,create_accou
                         ElevatedButton(
                             onPressed: () {
                               createAccountVaildat();
-
                             },
                             child: const Text(
                               'Create Account',
                               style: TextStyle(color: Colors.white),
                             )),
-                        TextButton(onPressed:(){
-                          Navigator.pushReplacementNamed(context, login_view.routName);
-                        }, child:Text('Are you have an acount?'))
+                        TextButton(onPressed: () {
+                          Navigator.pushReplacementNamed(context,
+                              login_view.routName);
+                        }, child: Text('Are you have an acount?'))
                       ],
                     ),
                   )),
@@ -208,57 +213,18 @@ class _creat_acountScreenState extends base_view<creat_acountScreen,create_accou
   void createAccountVaildat() async {
     if (formKey.currentState!.validate()) {
       viewModel.createAccountWithFirebaseAuth(
-          emailController.text, passwordController.text,fNameController.text,lNameController.text);
+          emailController.text, passwordController.text, fNameController.text,
+          lNameController.text);
     }
   }
 
   @override
   create_account_view_model initViewModel() {
-     return create_account_view_model();
-
+    return create_account_view_model();
   }
 
   @override
   void goToHome(MYUser user) {
-    Navigator.pushReplacementNamed(context,home_veiw_screen.routName);
-  }
-
-  @override
-  void hideLoading() {
-    Navigator.pop(context);
-  }
-
-  @override
-  void showLoading({String message = ' loading'}) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Center(child: Row(
-          children: [
-            Text(message),
-            CircularProgressIndicator(),
-          ],
-        ));
-      },
-    );
-  }
-
-  @override
-  void showMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Ok'))
-          ],
-          content: Text(message),
-        );
-      },
-    );
+    Navigator.pushReplacementNamed(context, home_veiw_screen.routName);
   }
 }

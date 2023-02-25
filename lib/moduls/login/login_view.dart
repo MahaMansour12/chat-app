@@ -155,42 +155,4 @@ class _login_viewState extends base_view<login_view, login_view_model>
     Navigator.pushReplacementNamed(context,home_veiw_screen.routName);
   }
 
-  @override
-  void hideLoading() {
-    Navigator.pop(context);
-  }
-
-  @override
-  void showLoading({String message = ' loading'}) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Center(child: Row(
-          children: [
-            Text(message),
-            CircularProgressIndicator(),
-          ],
-        ));
-      },
-    );
-  }
-
-  @override
-  void showMessage(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Ok'))
-          ],
-          content: Text(message),
-        );
-      },
-    );
-  }
 }
